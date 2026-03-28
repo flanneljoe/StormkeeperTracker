@@ -1,0 +1,15 @@
+## Interface: 120001
+## Title: Stormkeeper Tracker
+## Notes: Tracks the current charges of Stormkeepr
+## Author: Flannel Joe
+## Version: @project-version@
+## License: MIT
+## X-Curse-Project-ID: 1496573
+## SavedVariables: StormkeeperTrackerDB
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+StormkeeperTracker.lua

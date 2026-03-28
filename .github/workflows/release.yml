@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Package and upload to CurseForge (release)
+        if: "!contains(github.ref, 'alpha') && !contains(github.ref, 'beta')"
+        uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package only, no upload (alpha/beta)
+        if: "contains(github.ref, 'alpha') || contains(github.ref, 'beta')"
+        uses: BigWigsMods/packager@v2
+        with:
+          args: -d
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: StormkeeperTracker-${{ github.ref_name }}
+          path: .release/StormkeeperTracker/
+          if-no-files-found: error
