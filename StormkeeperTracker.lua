@@ -185,22 +185,6 @@ local function SetDebugMode(enabled)
     SKPrint("Debug mode " .. (enabled and "enabled." or "disabled."), LOG_LEVEL.DEBUG)
 end
 
-local function ShowPreview()
-    previewActive = true
-    skCharges = 2
-    skExpiration = GetTime() + SK_DURATION
-    UpdateUI()
-    SKPrint("Preview active — cast Stormkeeper or use /skt hide to exit.", LOG_LEVEL.DEBUG)
-end
-
-local function HidePreview()
-    previewActive = false
-    skCharges = nil
-    skExpiration = nil
-    UpdateUI()
-    SKPrint("Preview hidden.", LOG_LEVEL.DEBUG)
-end
-
 -- ============================================================
 -- Color Picker
 -- ============================================================
@@ -434,7 +418,7 @@ local function BuildSettingsFrame()
             StopPreviewLoop(f)
         end
     end)
-    -- ── Close button ───────────────────────────────────────────
+    -- Close button
     local closeButton = CreateFrame("Button", nil, f, "UIPanelCloseButton")
     closeButton:SetPoint("TOPRIGHT", f, "TOPRIGHT", -5, -5)
     closeButton:SetScript("OnClick", function() f:Hide() end)
@@ -503,12 +487,6 @@ local function OnSlashCommand(msg)
     elseif cmd == "debug" then
         SetDebugMode(not StormkeeperTrackerDB.debugMode)
 
-    elseif cmd == "show" then
-        ShowPreview()
-
-    elseif cmd == "hide" then
-        HidePreview()
-
     elseif cmd == "settings" or cmd == "config" then
         ToggleSettingsFrame()
 
@@ -526,8 +504,6 @@ local function OnSlashCommand(msg)
         SKPrint("/skt fontsize <number>      (8-56)", LOG_LEVEL.INFO)
         SKPrint("/skt fontcolor              (opens color picker)", LOG_LEVEL.INFO)
         SKPrint("/skt debug                  (toggle debug messages)", LOG_LEVEL.INFO)        
-        SKPrint("/skt show                   (Show preview Icon)", LOG_LEVEL.INFO)
-        SKPrint("/skt hide                   (Clear preview icon)", LOG_LEVEL.INFO)
         SKPrint("/skt settings               (Open settings panel)", LOG_LEVEL.INFO)
         SKPrint("/skt reset                  (Resets display and position)", LOG_LEVEL.INFO)
     end
